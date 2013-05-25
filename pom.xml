@@ -42,6 +42,10 @@
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.6</maven.compiler.target>
         <maven.compiler.source>1.6</maven.compiler.source>
+
+        <!--vaadin-->
+        <vaadin.version>7.0.0</vaadin.version>
+        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
 
     <dependencyManagement>
