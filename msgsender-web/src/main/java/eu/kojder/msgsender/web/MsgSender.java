@@ -1,4 +1,4 @@
-package eu.kojder.msgsender.display.main;
+package eu.kojder.msgsender.web;
 
 import com.vaadin.Application;
 import com.vaadin.data.Validator;
@@ -9,7 +9,7 @@ import eu.kojder.msgsender.model.DefaultMessage;
 import eu.kojder.msgsender.model.MessageType;
 import eu.kojder.msgsender.service.MessageService;
 import eu.kojder.msgsender.util.MobileValidator;
-import eu.kojder.msgsender.util.VaadinAppFileUtils;
+import eu.kojder.msgsender.util.MsgSenderFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +25,9 @@ import java.util.List;
  * Time: 13:43
  */
 @Stateful
-public class VaadinApp extends Application {
+public class MsgSender extends Application {
 
-    private static final Logger logger = LoggerFactory.getLogger(VaadinApp.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgSender.class);
 
     // main views
     private VerticalLayout inputFieldsArea = new VerticalLayout();
@@ -143,7 +143,7 @@ public class VaadinApp extends Application {
     //TODO: it should be done by crone, on prod. synchronized with the database
     @Deprecated()
     private void writeAllMessagesToFile() {
-        VaadinAppFileUtils.writeMessagesToFile(messageService.getAllMessages());
+        MsgSenderFileUtils.writeMessagesToFile(messageService.getAllMessages());
     }
 
     private boolean mandatoryFieldsAreValid() {

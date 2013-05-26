@@ -18,8 +18,8 @@ import java.util.List;
  */
 
 @WebListener
-public class VaadinAppContextListener implements ServletContextListener {
-    private static final Logger logger = LoggerFactory.getLogger(VaadinAppContextListener.class);
+public class MsgSenderContextListener implements ServletContextListener {
+    private static final Logger logger = LoggerFactory.getLogger(MsgSenderContextListener.class);
 
     @EJB
     MessageAccessService messageAccessService;
@@ -27,7 +27,7 @@ public class VaadinAppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         logger.info("start reading messages from file and sending to " + MessageAccessService.class.getSimpleName());
-        final List<DefaultMessage> messages = VaadinAppFileUtils.readMessagesFromFile();
+        final List<DefaultMessage> messages = MsgSenderFileUtils.readMessagesFromFile();
         messageAccessService.initMessages(messages);
         logger.info("reading messages from file and sending to " + MessageAccessService.class.getSimpleName() + " finished.");
     }
@@ -37,7 +37,7 @@ public class VaadinAppContextListener implements ServletContextListener {
         //TODO: doesn't work - tests
         logger.info("start reading messages " + MessageAccessService.class.getSimpleName() + " and saving to file");
         final List<DefaultMessage> messages = messageAccessService.getAllMessages();
-        VaadinAppFileUtils.writeMessagesToFile(messages);
+        MsgSenderFileUtils.writeMessagesToFile(messages);
         logger.info("reading messages " + MessageAccessService.class.getSimpleName() + " and saving to file finished");
     }
 

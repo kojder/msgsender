@@ -13,8 +13,8 @@ import java.util.List;
  * Date: 26.05.13
  * Time: 22:14
  */
-public class VaadinAppFileUtils {
-    private static final Logger logger = LoggerFactory.getLogger(VaadinAppFileUtils.class);
+public class MsgSenderFileUtils {
+    private static final Logger logger = LoggerFactory.getLogger(MsgSenderFileUtils.class);
 
     //TODO: file name + path set by property
     public static final String MESSAGES_FILE_NAME = "messages.ser";

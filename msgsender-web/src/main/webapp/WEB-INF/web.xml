@@ -16,7 +16,7 @@
         <init-param>
             <description>Vaadin UI Starting Page</description>
             <param-name>application</param-name>
-            <param-value>eu.kojder.msgsender.display.main.VaadinApp</param-value>
+            <param-value>eu.kojder.msgsender.web.MsgSender</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
