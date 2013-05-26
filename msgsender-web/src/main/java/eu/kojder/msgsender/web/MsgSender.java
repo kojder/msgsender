@@ -134,10 +134,17 @@ public class MsgSender extends Application {
             writeAllMessagesToFile();
             populateMessagesTable();
             initInputFields();
+            displayConfirmationInfo();
         } else {
             getMainWindow().showNotification("Please complete the missing fields", Window.Notification.TYPE_ERROR_MESSAGE);
             logger.debug("validation error");
         }
+    }
+
+    private void displayConfirmationInfo() {
+        Window.Notification notif = new Window.Notification("Excellent", "Message saved successfully!");
+        notif.setDelayMsec(1000);
+        getMainWindow().showNotification(notif);
     }
 
     //TODO: it should be done by crone, on prod. synchronized with the database
