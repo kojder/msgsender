@@ -92,6 +92,30 @@
          <scope>test</scope>               
       </dependency>
 
+       <!-- Logger -->
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-api</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>jcl-over-slf4j</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-log4j12</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+
+       <!--XStream-->
+       <dependency>
+           <groupId>com.thoughtworks.xstream</groupId>
+           <artifactId>xstream</artifactId>
+           <version>1.4.4</version>
+       </dependency>
+
    </dependencies>
 
    <build>

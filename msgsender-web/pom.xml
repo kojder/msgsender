@@ -14,58 +14,25 @@
 
    <name>msgsender Web module</name>
 
-    <repositories>
-        <repository>
-            <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        <repository>
-            <id>vaadin-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>vaadin-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
-
    <dependencies>
        <!--Vaadin-->
        <dependency>
            <groupId>com.vaadin</groupId>
-           <artifactId>vaadin-server</artifactId>
+           <artifactId>vaadin</artifactId>
            <version>${vaadin.version}</version>
        </dependency>
+
        <dependency>
-           <groupId>com.vaadin</groupId>
-           <artifactId>vaadin-client-compiled</artifactId>
-           <version>${vaadin.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>com.vaadin</groupId>
-           <artifactId>vaadin-client</artifactId>
-           <version>${vaadin.version}</version>
+           <groupId>javax</groupId>
+           <artifactId>javaee-web-api</artifactId>
+           <version>6.0</version>
            <scope>provided</scope>
        </dependency>
+
        <dependency>
-           <groupId>com.vaadin</groupId>
-           <artifactId>vaadin-themes</artifactId>
-           <version>${vaadin.version}</version>
+           <groupId>com.google.gwt</groupId>
+           <artifactId>gwt-user</artifactId>
+           <version>2.4.0</version>
        </dependency>
 
        <!-- Dependency on the EJB module so we can use it's services if needed -->
@@ -108,6 +75,32 @@
          <scope>provided</scope>
       </dependency>
 
+       <!-- Import the EJB API, we use provided scope as the API is included
+          in JBoss AS 7 -->
+       <dependency>
+           <groupId>org.jboss.spec.javax.ejb</groupId>
+           <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+           <scope>provided</scope>
+       </dependency>
+
+        <!-- Logger -->
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-api</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>jcl-over-slf4j</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-log4j12</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+
+
    </dependencies>
 
    <build>
@@ -134,42 +127,6 @@
                       </fileset>
                   </filesets>
               </configuration>
-          </plugin>
-          <plugin>
-              <groupId>com.vaadin</groupId>
-              <artifactId>vaadin-maven-plugin</artifactId>
-              <version>${vaadin.plugin.version}</version>
-              <configuration>
-                  <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                  <!-- <runTarget>mobilemail</runTarget> -->
-                  <!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This
-                      way compatible with Vaadin eclipse plugin. -->
-                  <webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
-                  </webappDirectory>
-                  <hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
-                  </hostedWebapp>
-                  <noServer>true</noServer>
-                  <!-- Remove draftCompile when project is ready -->
-                  <draftCompile>false</draftCompile>
-                  <compileReport>true</compileReport>
-                  <style>OBF</style>
-                  <strict>true</strict>
-                  <runTarget>http://localhost:8080/</runTarget>
-              </configuration>
-              <executions>
-                  <execution>
-                      <configuration>
-                          <!-- if you don't specify any modules, the plugin will find them -->
-                          <!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module>
-                              </modules> -->
-                      </configuration>
-                      <goals>
-                          <goal>resources</goal>
-                          <goal>update-widgetset</goal>
-                          <goal>compile</goal>
-                      </goals>
-                  </execution>
-              </executions>
           </plugin>
           <plugin>
               <groupId>org.mortbay.jetty</groupId>
