@@ -9,6 +9,7 @@ import eu.kojder.msgsender.model.DefaultMessage;
 import eu.kojder.msgsender.model.MessageType;
 import eu.kojder.msgsender.service.MessageService;
 import eu.kojder.msgsender.util.MobileValidator;
+import eu.kojder.msgsender.util.VaadinAppFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +28,17 @@ import java.util.List;
 public class VaadinApp extends Application {
 
     private static final Logger logger = LoggerFactory.getLogger(VaadinApp.class);
-    public static final String EMAIL_REGEXP = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$";
 
+    // main views
     private VerticalLayout inputFieldsArea = new VerticalLayout();
+    private Table messagesTable = new Table();
+
+    // left view components
     private TextField recipientTextField;
     private TextArea messageTextArea;
     private OptionGroup messageTypeRadios;
-    private static final int WIDTH_PERCENTAGE = 50;
-    private Table messagesTable = new Table();
+
+    private static final int INPUT_FIELDS_AREA_WIDTH_PERCENT = 50;
 
     @EJB
     MessageService messageService;
@@ -46,8 +50,28 @@ public class VaadinApp extends Application {
         initView();
         initInputFields();
         initMessagesTable();
+    }
 
+    private void initView() {
+        final AbstractSplitPanel mainPanel = new HorizontalSplitPanel();
+        mainPanel.setFirstComponent(inputFieldsArea);
+        mainPanel.setSecondComponent(messagesTable);
+        Window mainWindow = new Window("Message Sender", mainPanel); //TODO: i18n
+        setMainWindow(mainWindow);
+    }
 
+    private void initInputFields() {
+        inputFieldsArea.removeAllComponents();
+        constructFields();
+        setDefaultStyling();
+        addComponentsToFiedsArea();
+        addRequiredValidation();
+        inputFieldsArea.addComponent(new Button("Send", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                manageSendClick();
+            }
+        }));
     }
 
     private void initMessagesTable() {
@@ -68,20 +92,6 @@ public class VaadinApp extends Application {
         }
     }
 
-    private void initInputFields() {
-        inputFieldsArea.removeAllComponents();
-        constructFields();
-        setDefaultStyling();
-        addComponentsToFiedsArea();
-        addRequiredValidation();
-        inputFieldsArea.addComponent(new Button("Send", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                manageSendClick();
-            }
-        }));
-    }
-
     private void addRequiredValidation() {
         messageTextArea.setRequired(true);
         messageTypeRadios.setRequired(true);
@@ -96,8 +106,8 @@ public class VaadinApp extends Application {
     private void setDefaultStyling() {
         inputFieldsArea.setMargin(true);
         inputFieldsArea.setSpacing(true);
-        recipientTextField.setWidth(WIDTH_PERCENTAGE, Sizeable.UNITS_PERCENTAGE);
-        messageTextArea.setWidth(WIDTH_PERCENTAGE, Sizeable.UNITS_PERCENTAGE);
+        recipientTextField.setWidth(INPUT_FIELDS_AREA_WIDTH_PERCENT, Sizeable.UNITS_PERCENTAGE);
+        messageTextArea.setWidth(INPUT_FIELDS_AREA_WIDTH_PERCENT, Sizeable.UNITS_PERCENTAGE);
     }
 
     private void constructFields() {
@@ -121,12 +131,19 @@ public class VaadinApp extends Application {
 
         if (mandatoryFieldsAreValid()) {
             messageService.createMessage(messageTypeValue, recipientTextFieldValue, messageValue);
+            writeAllMessagesToFile();
             populateMessagesTable();
             initInputFields();
         } else {
             getMainWindow().showNotification("Please complete the missing fields", Window.Notification.TYPE_ERROR_MESSAGE);
-            logger.debug("recipient value {} doesn't match required pattern {}",recipientTextField, EMAIL_REGEXP);
+            logger.debug("validation error");
         }
+    }
+
+    //TODO: it should be done by crone, on prod. synchronized with the database
+    @Deprecated()
+    private void writeAllMessagesToFile() {
+        VaadinAppFileUtils.writeMessagesToFile(messageService.getAllMessages());
     }
 
     private boolean mandatoryFieldsAreValid() {
@@ -151,17 +168,11 @@ public class VaadinApp extends Application {
         return messageTypeRadios;
     }
 
-    private void initView() {
-        final AbstractSplitPanel mainPanel = new HorizontalSplitPanel();
-        mainPanel.setFirstComponent(inputFieldsArea);
-        mainPanel.setSecondComponent(messagesTable);
-        Window mainWindow = new Window("Message Sender", mainPanel);
-        setMainWindow(mainWindow);
-    }
 
     @Override
     @Remove
     public void close() {
+        logger.info(this.getClass().getSimpleName() + " closed");
         super.close();
     }
 }
