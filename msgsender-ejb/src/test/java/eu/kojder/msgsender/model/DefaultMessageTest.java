@@ -3,6 +3,8 @@ package eu.kojder.msgsender.model;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 public class DefaultMessageTest {
 
     @Test
@@ -14,7 +16,7 @@ public class DefaultMessageTest {
         final DefaultMessage defaultMessage = DefaultMessage.valueOf(messageTypeCaption, "test@test.com", "e-mail message");
 
         //then
-        Assert.assertTrue("should create " + EmailMessage.class.getSimpleName(),defaultMessage.getClass().equals(EmailMessage.class));
+        assertTrue("should create " + EmailMessage.class.getSimpleName(), defaultMessage.getClass().equals(EmailMessage.class));
     }
 
     @Test
@@ -26,7 +28,7 @@ public class DefaultMessageTest {
         final DefaultMessage defaultMessage = DefaultMessage.valueOf(messageTypeCaption, "test@test.com", "e-mail message");
 
         //then
-        Assert.assertTrue("should create " + SmsMessage.class.getSimpleName(),defaultMessage.getClass().equals(SmsMessage.class));
+        assertTrue("should create " + SmsMessage.class.getSimpleName(), defaultMessage.getClass().equals(SmsMessage.class));
     }
 
     @Test
@@ -38,7 +40,7 @@ public class DefaultMessageTest {
         final DefaultMessage defaultMessage = DefaultMessage.valueOf(messageTypeCaption, "test@test.com", "e-mail message");
 
         //then
-        Assert.assertFalse("should fail, expected class was e-mail",defaultMessage.getClass().equals(SmsMessage.class));
+        Assert.assertFalse("should fail, expected class was e-mail", defaultMessage.getClass().equals(SmsMessage.class));
     }
 
 }
