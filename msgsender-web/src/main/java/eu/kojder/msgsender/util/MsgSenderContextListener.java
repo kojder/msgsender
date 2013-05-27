@@ -34,7 +34,6 @@ public class MsgSenderContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        //TODO: doesn't work - tests
         logger.info("start reading messages " + MessageAccessService.class.getSimpleName() + " and saving to file");
         final List<DefaultMessage> messages = messageAccessService.getAllMessages();
         MsgSenderFileUtils.writeMessagesToFile(messages);

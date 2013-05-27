@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -56,7 +57,7 @@ public class MsgSender extends Application {
         final AbstractSplitPanel mainPanel = new HorizontalSplitPanel();
         mainPanel.setFirstComponent(inputFieldsArea);
         mainPanel.setSecondComponent(messagesTable);
-        Window mainWindow = new Window("Message Sender", mainPanel); //TODO: i18n
+        Window mainWindow = new Window("Message Sender", mainPanel);
         setMainWindow(mainWindow);
     }
 
@@ -84,6 +85,7 @@ public class MsgSender extends Application {
 
     private void populateMessagesTable() {
         final List<DefaultMessage> allMessages = messageService.getAllMessages();
+        Collections.reverse(allMessages);
         messagesTable.removeAllItems();
         int index = 1;
         for (DefaultMessage message : allMessages) {
@@ -95,6 +97,7 @@ public class MsgSender extends Application {
     private void addRequiredValidation() {
         messageTextArea.setRequired(true);
         messageTypeRadios.setRequired(true);
+        recipientTextField.setRequired(true);
     }
 
     private void addComponentsToFiedsArea() {
@@ -148,7 +151,6 @@ public class MsgSender extends Application {
     }
 
     //TODO: it should be done by crone, on prod. synchronized with the database
-    @Deprecated()
     private void writeAllMessagesToFile() {
         MsgSenderFileUtils.writeMessagesToFile(messageService.getAllMessages());
     }

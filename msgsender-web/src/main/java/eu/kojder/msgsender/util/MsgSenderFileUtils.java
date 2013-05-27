@@ -16,7 +16,6 @@ import java.util.List;
 public class MsgSenderFileUtils {
     private static final Logger logger = LoggerFactory.getLogger(MsgSenderFileUtils.class);
 
-    //TODO: file name + path set by property
     public static final String MESSAGES_FILE_NAME = "messages.ser";
     private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
 

@@ -6,10 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PreDestroy;
-import javax.ejb.*;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
+import javax.ejb.Schedule;
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * User: Andrzej
@@ -22,7 +24,7 @@ public class MessageAccessServiceImpl implements MessageAccessService {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageAccessServiceImpl.class);
 
-    private ConcurrentLinkedQueue<DefaultMessage> messages = new ConcurrentLinkedQueue<DefaultMessage>();
+    private ArrayList<DefaultMessage> messages = new ArrayList<DefaultMessage>();
 
     @Override
     public void addMessage(DefaultMessage message) {
@@ -39,19 +41,13 @@ public class MessageAccessServiceImpl implements MessageAccessService {
     @Override
     public void initMessages(List<DefaultMessage> incommingMessages) {
         if (this.messages.isEmpty()) {
-            this.messages = new ConcurrentLinkedQueue<DefaultMessage>(incommingMessages);
-        } else if (incommingMessages.containsAll(this.messages)) {
-            //TODO: may be wrong, messages sequence can be duplicated
-            incommingMessages.retainAll(this.messages);
-            this.messages.addAll(incommingMessages);
-        } else {
-            // TODO: web server restart, multiple web servers, on prod JPA sync/persistence
+            this.messages = new ArrayList<DefaultMessage>(incommingMessages);
         }
     }
 
     @Schedule(second = "*/10", minute = "*", hour = "*", info="Sync to DB every 5 seconds")
     void dbSync() {
-         //TODO:
+         // db sync. on production
     }
 
     @PreDestroy

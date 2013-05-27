@@ -13,7 +13,7 @@ public abstract class DefaultMessage implements Serializable {
     private final String message;
     private final MessageType messageType;
 
-    public DefaultMessage(final String recipient, final String message, final MessageType messageType) {
+    protected DefaultMessage(final String recipient, final String message, final MessageType messageType) {
         this.recipient = recipient;
         this.message = message;
         this.messageType = messageType;
