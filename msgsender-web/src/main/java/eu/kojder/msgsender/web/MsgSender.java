@@ -119,14 +119,7 @@ public class MsgSender extends Application {
     }
 
     private void manageSendClick() {
-        String messageTypeValue = null;
-        if (messageTypeRadios.getValue() != null) {
-            messageTypeValue = messageTypeRadios.getValue().toString();
-            recipientTextField.removeAllValidators();
-            recipientTextField.addValidator(getValidator(MessageType.getByCaption(messageTypeValue)));
-        } else {
-            recipientTextField.removeAllValidators();
-        }
+        final String messageTypeValue = setValidatorsAndGetMessageTypeValue();
         final String recipientTextFieldValue = recipientTextField.getValue().toString();
         final String messageValue = messageTextArea.getValue().toString();
 
@@ -140,6 +133,18 @@ public class MsgSender extends Application {
             getMainWindow().showNotification("Please complete the missing fields", Window.Notification.TYPE_ERROR_MESSAGE);
             logger.debug("validation error");
         }
+    }
+
+    private String setValidatorsAndGetMessageTypeValue() {
+        String messageTypeValue = null;
+        if (messageTypeRadios.getValue() != null) {
+            messageTypeValue = messageTypeRadios.getValue().toString();
+            recipientTextField.removeAllValidators();
+            recipientTextField.addValidator(getValidator(MessageType.getByCaption(messageTypeValue)));
+        } else {
+            recipientTextField.removeAllValidators();
+        }
+        return messageTypeValue;
     }
 
     private void displayConfirmationInfo() {
