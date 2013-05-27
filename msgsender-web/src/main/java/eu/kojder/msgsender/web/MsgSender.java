@@ -19,11 +19,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-/**
- * User: Andrzej
- * Date: 25.05.13
- * Time: 13:43
- */
 @Stateful
 public class MsgSender extends Application {
 

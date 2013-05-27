@@ -13,11 +13,6 @@ import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: Andrzej
- * Date: 26.05.13
- * Time: 13:13
- */
 @Lock(LockType.WRITE)
 @Singleton
 public class MessageAccessServiceImpl implements MessageAccessService {

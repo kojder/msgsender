@@ -2,11 +2,6 @@ package eu.kojder.msgsender.model;
 
 import java.util.ArrayList;
 
-/**
- * User: Andrzej
- * Date: 25.05.13
- * Time: 18:09
- */
 public enum MessageType {
     SMS("sms","SMS", "[-+\\d() ]{8,16}", "Recipient must be valid phone number"),
     EMAIL("email","E-mail", "^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$", "Recipient must be valid e-mail");

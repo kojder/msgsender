@@ -8,11 +8,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: Andrzej
- * Date: 26.05.13
- * Time: 22:14
- */
 public class MsgSenderFileUtils {
     private static final Logger logger = LoggerFactory.getLogger(MsgSenderFileUtils.class);
 

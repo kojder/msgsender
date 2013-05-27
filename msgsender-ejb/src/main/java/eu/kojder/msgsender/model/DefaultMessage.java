@@ -2,11 +2,6 @@ package eu.kojder.msgsender.model;
 
 import java.io.Serializable;
 
-/**
- * User: Andrzej
- * Date: 25.05.13
- * Time: 18:03
- */
 public abstract class DefaultMessage implements Serializable {
 
     private final String recipient;

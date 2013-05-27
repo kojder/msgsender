@@ -10,11 +10,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 
-/**
- * User: Andrzej
- * Date: 25.05.13
- * Time: 18:30
- */
 @Stateless
 public class MessageServiceImpl implements MessageService {
     private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);

@@ -11,12 +11,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.util.List;
 
-/**
- * User: Andrzej
- * Date: 26.05.13
- * Time: 14:16
- */
-
 @WebListener
 public class MsgSenderContextListener implements ServletContextListener {
     private static final Logger logger = LoggerFactory.getLogger(MsgSenderContextListener.class);
