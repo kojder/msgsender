@@ -83,23 +83,19 @@
            <scope>provided</scope>
        </dependency>
 
-        <!-- Logger -->
+       <!-- Logger -->
        <dependency>
            <groupId>org.slf4j</groupId>
            <artifactId>slf4j-api</artifactId>
-           <version>${slf4j.version}</version>
        </dependency>
        <dependency>
-           <groupId>org.slf4j</groupId>
-           <artifactId>jcl-over-slf4j</artifactId>
-           <version>${slf4j.version}</version>
+           <groupId>ch.qos.logback</groupId>
+           <artifactId>logback-core</artifactId>
        </dependency>
        <dependency>
-           <groupId>org.slf4j</groupId>
-           <artifactId>slf4j-log4j12</artifactId>
-           <version>${slf4j.version}</version>
+           <groupId>ch.qos.logback</groupId>
+           <artifactId>logback-classic</artifactId>
        </dependency>
-
 
    </dependencies>
 
