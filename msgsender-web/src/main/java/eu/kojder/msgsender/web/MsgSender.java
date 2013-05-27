@@ -2,13 +2,12 @@ package eu.kojder.msgsender.web;
 
 import com.vaadin.Application;
 import com.vaadin.data.Validator;
-import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.*;
 import eu.kojder.msgsender.model.DefaultMessage;
 import eu.kojder.msgsender.model.MessageType;
 import eu.kojder.msgsender.service.MessageService;
-import eu.kojder.msgsender.util.MobileValidator;
 import eu.kojder.msgsender.util.MsgSenderFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,9 +122,8 @@ public class MsgSender extends Application {
         String messageTypeValue = null;
         if (messageTypeRadios.getValue() != null) {
             messageTypeValue = messageTypeRadios.getValue().toString();
-            final MessageType messageType = messageService.getMessageType(messageTypeValue);
             recipientTextField.removeAllValidators();
-            recipientTextField.addValidator(getValidator(messageType));
+            recipientTextField.addValidator(getValidator(MessageType.getByCaption(messageTypeValue)));
         } else {
             recipientTextField.removeAllValidators();
         }
@@ -162,21 +160,19 @@ public class MsgSender extends Application {
     private Validator getValidator(MessageType messageType) {
         switch (messageType) {
             case EMAIL:
-                return new EmailValidator("Recipient field value must be in e-mail format");
+                return new RegexpValidator(MessageType.EMAIL.getRegexp(), true, MessageType.EMAIL.getErrorMessage());
             case SMS:
-                return new MobileValidator("Recipient field value must be in phone number format");
+                return new RegexpValidator(MessageType.SMS.getRegexp(), true, MessageType.SMS.getErrorMessage());
             default:
                 throw new IllegalStateException("trying get validator for non existing type of " + DefaultMessage.class.getSimpleName());
         }
     }
 
     private OptionGroup messageTypeRadios() {
-        final List<String> messageTypes = messageService.getMessageTypes();
-        messageTypeRadios = new OptionGroup("Message Type", messageTypes);
+        messageTypeRadios = new OptionGroup("Message Type", MessageType.getCaptions());
         messageTypeRadios.setImmediate(true);
         return messageTypeRadios;
     }
-
 
     @Override
     @Remove

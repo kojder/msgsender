@@ -31,6 +31,17 @@ public abstract class DefaultMessage implements Serializable {
         return messageType;
     }
 
+    public static DefaultMessage valueOf(final String messageTypeCaption, final String recipient, final String message) {
+        switch (MessageType.getByCaption(messageTypeCaption)) {
+            case SMS:
+                return new SmsMessage(recipient, message);
+            case EMAIL:
+                return new EmailMessage(recipient, message);
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
     @Override
     public String toString() {
         return "DefaultMessage{" +
